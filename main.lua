@@ -59,12 +59,14 @@ function genHash(encodedToken, keyFilePath)
   return sha256.hmac_sha256(key, encodedToken)
 end
 
-local params = getParams(paramsFilePath)
-local token = genToken(params)
-local hash = genHash(token, keyFilePath)
-
-function handle_request(env)                                                                                           
+function handle_request(env)
+  local params = getParams(paramsFilePath)
+  local token = genToken(params)
+  local hash = genHash(token, keyFilePath)
+  print(hash)
   uhttpd.send("Status: 301 Moved Permanently\r\n")                                                               
   uhttpd.send("Content-Type: text/html\r\n\r\n")                                                                 
   uhttpd.send("<head><meta http-equiv='refresh' content='0; url='" .. params.urlRedirect .. "/?token=" .. token .. "&hash=" .. hash .."' /></head>")                                                                                                        
 end
+
+handle_request()
