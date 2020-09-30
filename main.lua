@@ -68,3 +68,5 @@ function handle_request(env)
   uhttpd.send("Content-Type: text/html\r\n\r\n")                                                                 
   uhttpd.send("<head><meta http-equiv='refresh' content='0; url='" .. params.urlRedirect .. "/?token=" .. token .. "&hash=" .. hash .."' /></head>")                                                                                                        
 end
+
+print "tests"
