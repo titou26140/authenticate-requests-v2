@@ -1,0 +1,8 @@
+BEFORE
+opkg install uhttpd-mod-lua
+
+CREATE FILE params.json and key
+
+CONFIG TO ADD TO BOX ROUTER
+        option lua_prefix '/wiipress'
+        option lua_handler '/root/authenticate-requests-v2/main.lua'
