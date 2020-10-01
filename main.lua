@@ -1,4 +1,4 @@
-local base64 = require "./base64"
+local base64 = require "base64"
 local sha256 = require("sha256")
 local json = require("json")
 
