@@ -69,10 +69,7 @@ function handle_request(env)
   local params = getParams(paramsFilePath)
   local token = genToken(params)
   local hash = genHash(token, keyFilePath)
-  uhttpd.send("Status: 200 OK\r\n")                                                               
+  uhttpd.send("Status: 301 Moved Permanently\r\n")                                                               
   uhttpd.send("Content-Type: text/html\r\n\r\n")
   uhttpd.send("<script>document.location.href='" .. params.urlRedirect .. "/?token=" .. token .. "&hash=" .. hash .."';</script>")
-  -- uhttpd.send("<head><meta http-equiv='refresh' content='0; url='https://www.google.fr'></head>")
-  -- uhttpd.send(keyFilePath)                                                                 
-  -- uhttpd.send("<head><meta http-equiv='refresh' content='0; url='" .. params.urlRedirect .. "/?token=" .. token .. "&hash=" .. hash .."' /></head>")                                                                                                        
-end
+ end
