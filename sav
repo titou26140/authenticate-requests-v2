@@ -1,6 +1,0 @@
-config uhttpd press
-        list listen_http        0.0.0.0:8080
-        option enable_http      1
-        option home             /www/authenticate-requests-v2
-        option lua_prefix       '/wiipress'
-        option lua_handler      /www/authenticate-requests-v2/test.lua
