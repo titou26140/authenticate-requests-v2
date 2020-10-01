@@ -1,15 +1,21 @@
-local base64 = require "base64"
-local sha256 = require("sha256")
-local json = require("json")
+function script_path()
+   local str = debug.getinfo(2, "S").source:sub(2)
+   return str:match("(.*/)")
+end
 
-paramsFilePath = "params.json"
-keyFilePath = "key"
+local path = script_path()
+
+local base64 = require(path .. 'base64')
+local sha256 = require(path .. 'sha256')
+local json = require(path .. 'json')
+
+paramsFilePath = path .. './params.json'
+keyFilePath = path .. 'key'
 
 function getParams (paramsFilePath)
-  local params = {company = nil, serialNumber = nil, urlRedirect = nil}
+  local params = {company = nill, serialNumber = nil, urlRedirect = nil}
   local fileContent = nil
   local file = io.open(paramsFilePath, "r")
-
   if (file == nil) then
     print "File does not exist. Check if your params.json is set."
     os.exit()
@@ -63,8 +69,10 @@ function handle_request(env)
   local params = getParams(paramsFilePath)
   local token = genToken(params)
   local hash = genHash(token, keyFilePath)
-  print(hash)
-  uhttpd.send("Status: 301 Moved Permanently\r\n")                                                               
-  uhttpd.send("Content-Type: text/html\r\n\r\n")                                                                 
-  uhttpd.send("<head><meta http-equiv='refresh' content='0; url='" .. params.urlRedirect .. "/?token=" .. token .. "&hash=" .. hash .."' /></head>")                                                                                                        
+  uhttpd.send("Status: 200 OK\r\n")                                                               
+  uhttpd.send("Content-Type: text/html\r\n\r\n")
+  uhttpd.send("<script>document.location.href='" .. params.urlRedirect .. "/?token=" .. token .. "&hash=" .. hash .."';</script>")
+  -- uhttpd.send("<head><meta http-equiv='refresh' content='0; url='https://www.google.fr'></head>")
+  -- uhttpd.send(keyFilePath)                                                                 
+  -- uhttpd.send("<head><meta http-equiv='refresh' content='0; url='" .. params.urlRedirect .. "/?token=" .. token .. "&hash=" .. hash .."' /></head>")                                                                                                        
 end
