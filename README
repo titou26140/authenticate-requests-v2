@@ -1,4 +1,7 @@
 BEFORE
+opkg update
+opkg install git
+opkg install git-http
 opkg install uhttpd-mod-lua
 
 CREATE FILE params.json and key
