@@ -4,8 +4,29 @@ opkg install git
 opkg install git-http
 opkg install uhttpd-mod-lua
 
-CREATE FILE params.json and key
+## Go to /www/ ##
+cd /www/
 
-CONFIG TO ADD TO BOX ROUTER
+## Clone projet
+git clone https://github.com/titou26140/authenticate-requests-v2.git
+
+CREATE FILE params.json and key
+cp params-example.json params.json
+touch key
+
+UPDATE PARAMS and KEY FILES
+vi params.json
+vi key
+
+uhttpd config file : /etc/config/uhttpd
+
+## DEPRECATED : CONFIG TO ADD TO BOX ROUTER ##
         option lua_prefix '/wiipress'
         option lua_handler '/root/authenticate-requests-v2/main.lua'
+
+UPDATE OF config
+uci add_list uhttpd.main.lua_prefix='/wiipress=/www/authenticate-requests-v2/main.lua'
+uci commit uhttpd
+
+RESTART THE SERVER
+/etc/init.d/uhttpd restart
