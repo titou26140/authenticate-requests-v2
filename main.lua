@@ -76,6 +76,5 @@ function handle_request(env)
     local hash = genHash(token, keyFilePath)
     uhttpd.send("Status: 301 Moved Permanently\r\n")
     uhttpd.send("Content-Type: text/html\r\n\r\n")
-    uhttpd.send("<script>document.location.href='" .. params.urlRedirect .. "/?token=" .. token .. "&hash=" .. hash ..
-                    "';</script>")
+    uhttpd.send("<script>document.location.href='" .. params.urlRedirect .. "/" .. token .. "/" .. hash .. "';</script>")
 end
