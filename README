@@ -18,14 +18,10 @@ UPDATE PARAMS and KEY FILES
 vi params.json
 vi key
 
-uhttpd config file : /etc/config/uhttpd
 
-## DEPRECATED : CONFIG TO ADD TO BOX ROUTER ##
-        option lua_prefix '/wiipress'
-        option lua_handler '/root/authenticate-requests-v2/main.lua'
-
-UPDATE OF config
-uci add_list uhttpd.main.lua_prefix='/wiipress=/www/authenticate-requests-v2/main.lua'
+UPDATE UHTTPD CONFIG
+uci set uhttpd.main.lua_prefix='/wiipress'
+uci set uhttpd.main.lua_handler='/www/authenticate-requests-v2/main.lua'
 uci commit uhttpd
 
 RESTART THE SERVER
