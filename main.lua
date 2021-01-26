@@ -78,3 +78,6 @@ function handle_request(env)
     uhttpd.send("Content-Type: text/html\r\n\r\n")
     uhttpd.send("<script>document.location.href='" .. params.urlRedirect .. "/" .. token .. "/" .. hash .. "';</script>")
 end
+
+print("Date : " .. os.date("%d-%m-%Y"))
+print("timestamp : " .. os.time(os.date("!*t")));
