@@ -9,7 +9,7 @@ local sha256 = require(path .. 'sha256')
 local json = require(path .. 'json')
 
 paramsFilePath = path .. './params.json'
-keyFilePath = path .. 'key'
+keyFilePath = path .. './key'
 
 function getParams(paramsFilePath)
     local params = {
@@ -71,7 +71,6 @@ end
 
 function genHash(encodedToken, key)
     local hash = sha256.hmac_sha256(key, encodedToken)
-
     return hash
 end
 
@@ -80,16 +79,30 @@ function handle_request(env)
     local token = genToken(params)
     local key = getKey(keyFilePath)
     local hash = genHash(token, key)
+    logInFile("KEY : " .. key)
+    logInFile("TOKEN : " .. token)
+    logInFile("HASH : " .. hash)
+    logInFile("URL : " .. params.urlRedirect .. "/" .. token .. "/" .. hash)
+    logInFile("")
+
     uhttpd.send("Status: 301 Moved Permanently\r\n")
     uhttpd.send("Content-Type: text/html\r\n\r\n")
     uhttpd.send("<script>document.location.href='" .. params.urlRedirect .. "/" .. token .. "/" .. hash .. "';</script>")
+end
+
+function logInFile(log)
+    local file = io.open("./log", "a")
+    io.output(file)
+    io.write(log .. "\n")
+    io.close(file)
 end
 
 local params = getParams(paramsFilePath)
 local token = genToken(params)
 local key = getKey(keyFilePath)
 local hash = genHash(token, key)
-print ("KEY : " .. key)
-print ("TOKEN : " .. token)
-print("HASH : " .. hash)
-print("URL : " .. params.urlRedirect .. "/" .. token .. "/" .. hash)
+logInFile("KEY : " .. key)
+logInFile("TOKEN : " .. token)
+logInFile("HASH : " .. hash)
+logInFile("URL : " .. params.urlRedirect .. "/" .. token .. "/" .. hash)
+logInFile("")
