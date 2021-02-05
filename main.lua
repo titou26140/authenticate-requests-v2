@@ -57,6 +57,15 @@ function genToken(params)
     return base64.encode(json.stringify(params))
 end
 
+function getKey(keyFilePath)
+    local file = io.open(keyFilePath, "r")
+
+    if (file == nil) then
+        error("Key file does not exit.")
+    end
+    return file:read "*a"
+end
+
 function genHash(encodedToken, keyFilePath)
     local file = io.open(keyFilePath, "r")
 
@@ -78,3 +87,11 @@ function handle_request(env)
     uhttpd.send("Content-Type: text/html\r\n\r\n")
     uhttpd.send("<script>document.location.href='" .. params.urlRedirect .. "/" .. token .. "/" .. hash .. "';</script>")
 end
+
+local params = getParams(paramsFilePath)
+local token = genToken(params)
+local hash = genHash(token, keyFilePath)
+local key = getKey(keyFilePath)
+print ("KEY : " .. key)
+print ("TOKEN : " .. token)
+print("HASH : " .. hash)
