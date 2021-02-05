@@ -4,6 +4,8 @@ opkg install git
 opkg install git-http
 opkg install uhttpd-mod-lua
 
+## opkg update && opkg install git && opkg install git-http && opkg install uhttpd-mod-lua
+
 ## Go to /www/ ##
 cd /www/
 
@@ -23,6 +25,9 @@ UPDATE UHTTPD CONFIG
 uci set uhttpd.main.lua_prefix='/wiipress'
 uci set uhttpd.main.lua_handler='/www/authenticate-requests-v2/main.lua'
 uci commit uhttpd
+
+## uci set uhttpd.main.lua_prefix='/wiipress' && uci set uhttpd.main.lua_handler='/www/authenticate-requests-v2/main.lua' && uci commit uhttpd
+
 
 RESTART THE SERVER
 /etc/init.d/uhttpd restart
