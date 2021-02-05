@@ -63,18 +63,14 @@ function getKey(keyFilePath)
     if (file == nil) then
         error("Key file does not exit.")
     end
-    return file:read "*a"
+    local key = file:read "*a"
+    key = key:gsub( "%W", "" )
+    io.close(file)
+    return key
 end
 
-function genHash(encodedToken, keyFilePath)
-    local file = io.open(keyFilePath, "r")
-
-    if (file == nil) then
-        error("Key file does not exit.")
-    end
-    local key = file:read "*a"
+function genHash(encodedToken, key)
     local hash = sha256.hmac_sha256(key, encodedToken)
-    io.close(file)
 
     return hash
 end
@@ -82,6 +78,7 @@ end
 function handle_request(env)
     local params = getParams(paramsFilePath)
     local token = genToken(params)
+    local key = getKey(keyFilePath)
     local hash = genHash(token, keyFilePath)
     uhttpd.send("Status: 301 Moved Permanently\r\n")
     uhttpd.send("Content-Type: text/html\r\n\r\n")
@@ -90,8 +87,8 @@ end
 
 local params = getParams(paramsFilePath)
 local token = genToken(params)
-local hash = genHash(token, keyFilePath)
 local key = getKey(keyFilePath)
+local hash = genHash(token, key)
 print ("KEY : " .. key)
 print ("TOKEN : " .. token)
 print("HASH : " .. hash)
