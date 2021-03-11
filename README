@@ -31,3 +31,6 @@ uci commit uhttpd
 
 RESTART THE SERVER
 /etc/init.d/uhttpd restart
+
+## PARAMS THE BOX
+WebUI → Network → Firewall → Traffic Rules find a rule called “Hotspot_input”, then click “Edit” button and by the field “Destination port” insert port 80 or 443.
