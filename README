@@ -1,7 +1,9 @@
+SSH CONNECT
+ssh root@192.168.1.1
+Password : Admin UI password
+
 BEFORE
 opkg update
-opkg install git
-opkg install git-http
 opkg install uhttpd-mod-lua
 
 ## opkg update && opkg install git && opkg install git-http && opkg install uhttpd-mod-lua
@@ -9,8 +11,13 @@ opkg install uhttpd-mod-lua
 ## Go to /www/ ##
 cd /www/
 
-## Clone projet
-git clone https://github.com/titou26140/authenticate-requests-v2.git
+## Download projet
+curl -L -O  https://github.com/titou26140/authenticate-requests-v2/archive/master.tar.gz
+tar -xzf master.tar.gz
+mv authenticate-requests-v2-master/ authenticate-requests-v2
+
+## curl -L -O  https://github.com/titou26140/authenticate-requests-v2/archive/master.tar.gz && tar -xzf master.tar.gz && mv authenticate-requests-v2-master/ authenticate-requests-v2
+
 
 CREATE FILE params.json and key
 cp params-example.json params.json
@@ -20,6 +27,7 @@ UPDATE PARAMS and KEY FILES
 vi params.json
 vi key
 
+Current Key : *********
 
 UPDATE UHTTPD CONFIG
 uci set uhttpd.main.lua_prefix='/wiipress'
@@ -31,6 +39,12 @@ uci commit uhttpd
 
 RESTART THE SERVER
 /etc/init.d/uhttpd restart
+
+
+PRESERVE FILES DURING NEXT UPGRADES
+vi /etc/sysupgrade.conf
+add : /www/authenticate-requests-v2
+
 
 ## PARAMS THE BOX
 WebUI → Network → Firewall → Traffic Rules find a rule called “Hotspot_input”, then click “Edit” button and by the field “Destination port” insert port 80 or 443.
