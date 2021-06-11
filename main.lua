@@ -53,7 +53,7 @@ end
 
 function genToken(params)
     params.date = os.date("%d-%m-%Y")
-    params.timestamp = os.time()
+    params.timestamp = os.time(os.date("!*t")) + 3600
     return base64.encode(json.stringify(params))
 end
 
