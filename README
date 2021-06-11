@@ -16,7 +16,7 @@ curl -L -O  https://github.com/titou26140/authenticate-requests-v2/archive/maste
 tar -xzf master.tar.gz
 mv authenticate-requests-v2-master/ authenticate-requests-v2
 
-## curl -L -O  https://github.com/titou26140/authenticate-requests-v2/archive/master.tar.gz && tar -xzf master.tar.gz && mv authenticate-requests-v2-master/ authenticate-requests-v2
+## curl -L -O  https://github.com/titou26140/authenticate-requests-v2/archive/master.tar.gz && tar -xzf master.tar.gz && mv authenticate-requests-v2-master/ authenticate-requests-v2 && cd authenticate-requests-v2
 
 
 CREATE FILE params.json and key
