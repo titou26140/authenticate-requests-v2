@@ -6,7 +6,7 @@ BEFORE
 opkg update
 opkg install uhttpd-mod-lua
 
-## opkg update && opkg install git && opkg install git-http && opkg install uhttpd-mod-lua
+## opkg update && opkg install uhttpd-mod-lua
 
 ## Go to /www/ ##
 cd /www/
