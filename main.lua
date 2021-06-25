@@ -81,10 +81,10 @@ function handle_request(env)
     local hash = genHash(token, key)
 
     uhttpd.send("Status: 302 Found\r\n")
+    uhttpd.send("Cache-Control: no-cache, no-store, must-revalidate\r\n")
+    uhttpd.send("Pragma: no-cache\r\n")
+    uhttpd.send("Expires: 0\r\n")
     uhttpd.send("Content-Type: text/html\r\n\r\n")
-    uhttpd.send("Cache-Control: no-cache, no-store, must-revalidate")
-    uhttpd.send("Pragma: no-cache")
-    uhttpd.send("Expires: 0")
     uhttpd.send("<script>document.location.href='" .. params.urlRedirect .. "/" .. token .. "/" .. hash .. "';</script>")
 end
 
